@@ -23,7 +23,9 @@ function Profile() {
   const [userList, setUserList] = useState([]);
   const [skillsData, setSkillsData] = useState([]);
   const [category, setCategory] = useState(null);
-  const [skill, setSkill] = useState(null);
+  const [skill, setSkill] = useState([]);
+
+  console.log('skills', skill)
 
   const handleLogout = async () => {
     await removeToken();
@@ -88,8 +90,10 @@ function Profile() {
   };
   const handleGetUserList = async (id) => {
     const formdata = new FormData();
-    if (skill?.name) {
-      formdata.append("skills[1]", skill.name);
+    if (skill.length >0) {
+      const skillPayload = skill.map(item => item.name)
+      formdata.append("skills[1]", skillPayload.toString());
+     
     }
     if (category?.name) {
       formdata.append("category", category.name);
@@ -413,7 +417,7 @@ function Profile() {
                 value={category}
                 onChange={(e) => {
                   setCategory(e);
-                  setSkill(null);
+                  setSkill([]);
                 }}
                 className='w-80'
               />
@@ -421,7 +425,7 @@ function Profile() {
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
                 placeholder="Select Skills"
-              
+                isMulti
                 options={skillsData}
                 value={skill}
                 onChange={(e) => setSkill(e)}
@@ -430,7 +434,7 @@ function Profile() {
               <button
                 onClick={() => {
                   setCategory(null);
-                  setSkill(null);
+                  setSkill([]);
                 }}
                 className="bg-blue-500 text-white rounded-full px-8 py-2 text-sm"
               >
