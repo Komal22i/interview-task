@@ -415,14 +415,17 @@ function Profile() {
                   setCategory(e);
                   setSkill(null);
                 }}
+                className='w-80'
               />
               <Select
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
                 placeholder="Select Skills"
+              
                 options={skillsData}
                 value={skill}
                 onChange={(e) => setSkill(e)}
+                className='w-80'
               />
               <button
                 onClick={() => {
